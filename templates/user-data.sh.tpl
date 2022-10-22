@@ -130,7 +130,7 @@ EOF
 fi
 chmod +x "$CRON_FILE"
 
-mkdir /data
+mkdir --parents /data
 
 # add configs
 if ! [ -f /data/.env.gen ]; then
