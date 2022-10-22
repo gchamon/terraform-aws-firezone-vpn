@@ -182,7 +182,7 @@ fi
 
 cat <<EOF >/data/.env.static
 FZ_INSTALL_DIR=/data
-EXTERNAL_URL=${firezone_external_url}
+EXTERNAL_URL=https://${firezone_external_url}
 WIREGUARD_ENDPOINT=${wireguard_endpoint}
 ADMIN_EMAIL=${admin_user_email}
 DEFAULT_ADMIN_PASSWORD=${admin_password}
