@@ -129,7 +129,8 @@ chmod +x "$CRON_FILE"
 mkdir /data
 
 # add configs
-cat <<EOF >/data/.env
+if ! [ -f /data/.env ]; then
+  cat <<EOF >/data/.env
 FZ_INSTALL_DIR=/data
 EXTERNAL_URL=${firezone_external_url}
 WIREGUARD_ENDPOINT=${wireguard_endpoint}
@@ -150,8 +151,10 @@ ${environment_variable_key}=${environment_variable_value}
 %{ endfor ~}
 
 EOF
+fi
 
-cat <<EOF >/data/docker-compose.yml
+if ! [ -f /data/docker-compose.yml ]; then
+  cat <<EOF >/data/docker-compose.yml
 x-deploy: &default-deploy
   restart_policy:
     condition: on-failure
@@ -216,6 +219,7 @@ services:
         order: stop-first
 
 EOF
+fi
 
 docker compose -f /data/docker-compose.yml up -d
 
