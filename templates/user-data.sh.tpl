@@ -145,9 +145,9 @@ DATABASE_PASSWORD=$(openssl rand -base64 12)
 UID=1000
 GID=1000
 
-${ for environment_variable_key, environment_variable_value in firezone_environment_variables }
+%{ for environment_variable_key, environment_variable_value in firezone_environment_variables }
 ${environment_variable_key}=${environment_variable_value}
-${ endfor ~}
+%{ endfor ~}
 
 EOF
 
