@@ -179,11 +179,11 @@ services:
   caddy:
     image: caddy:2
     volumes:
-      - $${FZ_INSTALL_DIR:-.}/caddy:/data/caddy
+      - \$${FZ_INSTALL_DIR:-.}/caddy:/data/caddy
     ports:
       - 80:80
       - 443:443
-    command: caddy reverse-proxy --to firezone:13000 --from $${EXTERNAL_URL:?err} $${CADDY_OPTS}
+    command: caddy reverse-proxy --to firezone:13000 --from \$${EXTERNAL_URL:?err} \$${CADDY_OPTS}
     deploy:
       <<: *default-deploy
 
@@ -194,12 +194,12 @@ services:
     env_file:
       # This should contain a list of env vars for configuring Firezone.
       # See https://docs.firezone.dev/reference/env-vars for more info.
-      - $${FZ_INSTALL_DIR:-.}/.env
+      - \$${FZ_INSTALL_DIR:-.}/.env
     volumes:
       # IMPORTANT: Persists WireGuard private key and other data. If
       # /var/firezone/private_key exists when Firezone starts, it is
       # used as the WireGuard private. Otherwise, one is generated.
-      - $${FZ_INSTALL_DIR:-.}/firezone:/var/firezone
+      - \$${FZ_INSTALL_DIR:-.}/firezone:/var/firezone
     cap_add:
       # Needed for WireGuard and firewall support.
       - NET_ADMIN
@@ -217,11 +217,11 @@ services:
   postgres:
     image: postgres:15
     volumes:
-      - $${FZ_INSTALL_DIR:-.}/postgres:/var/lib/postgresql/data
+      - \$${FZ_INSTALL_DIR:-.}/postgres:/var/lib/postgresql/data
     environment:
-      POSTGRES_DB: $${DATABASE_NAME:-firezone}
-      POSTGRES_USER: $${DATABASE_USER:-postgres}
-      POSTGRES_PASSWORD: $${DATABASE_PASSWORD:?err}
+      POSTGRES_DB: \$${DATABASE_NAME:-firezone}
+      POSTGRES_USER: \$${DATABASE_USER:-postgres}
+      POSTGRES_PASSWORD: \$${DATABASE_PASSWORD:?err}
     deploy:
       <<: *default-deploy
       update_config:
