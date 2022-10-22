@@ -19,7 +19,7 @@ output "private_key" {
 }
 
 output "password" {
-  value = random_password.this
+  value = random_password.admin_password
 }
 
 output "endpoint_record" {
