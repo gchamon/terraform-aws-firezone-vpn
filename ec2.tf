@@ -26,6 +26,7 @@ resource "aws_launch_template" "instance" {
   vpc_security_group_ids  = [aws_security_group.wireguard.id]
   image_id                = data.aws_ami.amazon_linux_2.image_id
   key_name                = aws_key_pair.this.key_name
+  update_default_version  = true
 
   block_device_mappings {
     device_name = "/dev/xvda"
