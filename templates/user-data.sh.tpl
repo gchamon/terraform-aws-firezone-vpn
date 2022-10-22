@@ -4,7 +4,7 @@ set -eu
 
 %{ if enable-cloudwatch-metrics ~}
 # install and configure cloudwatch agent
-sudo yum install --assumeyes amazon-cloudwatch-agent
+sudo yum install --assumeyes amazon-cloudwatch-agent jq
 cat <<-EOF > /opt/aws/amazon-cloudwatch-agent/bin/config.json
 {
   "metrics": {
