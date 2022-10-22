@@ -134,6 +134,7 @@ mkdir /data
 
 # add configs
 if ! [ -f /data/.env.gen ]; then
+  export RANDFILE=/tmp/.random
   cat <<EOF >/data/.env.gen
 GUARDIAN_SECRET_KEY=$(openssl rand -base64 48)
 SECRET_KEY_BASE=$(openssl rand -base64 48)
