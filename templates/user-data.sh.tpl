@@ -133,7 +133,7 @@ cat <<EOF >/data/.env
 FZ_INSTALL_DIR=/data
 EXTERNAL_URL=${firezone_external_url}
 WIREGUARD_ENDPOINT=${wireguard_endpoint}
-ADMIN_EMAIL=${admin_email}
+ADMIN_EMAIL=${admin_user_email}
 DEFAULT_ADMIN_PASSWORD=${admin_password}
 GUARDIAN_SECRET_KEY=$(openssl rand -base64 48)
 SECRET_KEY_BASE=$(openssl rand -base64 48)

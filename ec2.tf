@@ -57,6 +57,7 @@ resource "aws_launch_template" "instance" {
   user_data = base64encode(templatefile(
     "${path.module}/templates/user-data.sh.tpl",
     {
+      admin_user_email               = var.admin_user_email
       aws_region                     = var.aws_region
       aws_account_id                 = data.aws_caller_identity.current.account_id
       eip_id                         = aws_eip.this.id
