@@ -217,4 +217,6 @@ services:
 
 EOF
 
+docker compose -f /data/docker-compose.yml up -d
+
 log "ENDING USER-DATA"
