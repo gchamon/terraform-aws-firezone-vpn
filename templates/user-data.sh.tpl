@@ -2,9 +2,13 @@
 exec > >(tee /var/log/user-data.log) 2>&1
 set -eu
 
+function log {
+  echo "--[$(date '+%Y-%m-%d %H:%M:%S')] $1"
+}
+
 %{ if enable-cloudwatch-metrics ~}
 # install and configure cloudwatch agent
-sudo yum install --assumeyes amazon-cloudwatch-agent jq
+sudo yum install --assumeyes amazon-cloudwatch-agent
 cat <<-EOF > /opt/aws/amazon-cloudwatch-agent/bin/config.json
 {
   "metrics": {
@@ -46,9 +50,9 @@ EOF
   -s
 
 %{ endif ~}
-function log {
-  echo "--[$(date '+%Y-%m-%d %H:%M:%S')] $1"
-}
+
+log "INSTALLING DEPENDNECIES"
+yum install --assumeyes jq
 
 log "STARTING USER-DATA"
 
