@@ -58,6 +58,7 @@ resource "aws_launch_template" "instance" {
     "${path.module}/templates/user-data.sh.tpl",
     {
       admin_user_email               = var.admin_user_email
+      admin_password                 = random_password.admin_password.result
       aws_region                     = var.aws_region
       aws_account_id                 = data.aws_caller_identity.current.account_id
       eip_id                         = aws_eip.this.id
