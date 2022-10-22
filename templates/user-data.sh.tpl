@@ -129,13 +129,8 @@ chmod +x "$CRON_FILE"
 mkdir /data
 
 # add configs
-if ! [ -f /data/.env ]; then
-  cat <<EOF >/data/.env
-FZ_INSTALL_DIR=/data
-EXTERNAL_URL=${firezone_external_url}
-WIREGUARD_ENDPOINT=${wireguard_endpoint}
-ADMIN_EMAIL=${admin_user_email}
-DEFAULT_ADMIN_PASSWORD=${admin_password}
+if ! [ -f /data/.env.gen ]; then
+  cat <<EOF >/data/.env.gen
 GUARDIAN_SECRET_KEY=$(openssl rand -base64 48)
 SECRET_KEY_BASE=$(openssl rand -base64 48)
 LIVE_VIEW_SIGNING_SALT=$(openssl rand -base64 24)
@@ -143,6 +138,15 @@ COOKIE_SIGNING_SALT=$(openssl rand -base64 6)
 COOKIE_ENCRYPTION_SALT=$(openssl rand -base64 6)
 DATABASE_ENCRYPTION_KEY=$(openssl rand -base64 32)
 DATABASE_PASSWORD=$(openssl rand -base64 12)
+EOF
+fi
+
+cat <<EOF >/data/.env.static
+FZ_INSTALL_DIR=/data
+EXTERNAL_URL=${firezone_external_url}
+WIREGUARD_ENDPOINT=${wireguard_endpoint}
+ADMIN_EMAIL=${admin_user_email}
+DEFAULT_ADMIN_PASSWORD=${admin_password}
 UID=1000
 GID=1000
 
@@ -151,10 +155,10 @@ ${environment_variable_key}=${environment_variable_value}
 %{ endfor ~}
 
 EOF
-fi
 
-if ! [ -f /data/docker-compose.yml ]; then
-  cat <<EOF >/data/docker-compose.yml
+cat /data/.env.static /data/.env.gen > /data/.env
+
+cat <<EOF >/data/docker-compose.yml
 x-deploy: &default-deploy
   restart_policy:
     condition: on-failure
@@ -219,7 +223,6 @@ services:
         order: stop-first
 
 EOF
-fi
 
 docker compose -f /data/docker-compose.yml up -d
 
