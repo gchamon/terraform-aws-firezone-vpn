@@ -30,9 +30,9 @@ output "web_record" {
   value = aws_route53_record.web
 }
 
-output "internal_record" {
-  value = aws_route53_record.internal
-}
+#output "internal_record" {
+#  value = aws_route53_record.internal
+#}
 
 output "backup_bucket" {
   value = aws_s3_bucket.backup
