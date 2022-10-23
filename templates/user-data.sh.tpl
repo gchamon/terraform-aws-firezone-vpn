@@ -264,5 +264,7 @@ services:
 EOF
 
 docker compose -f /data/docker-compose.yml up -d
+sleep 60
+docker compose exec -f /data/docker-compose.yml firezone bin/create-or-reset-admin
 
 log "ENDING USER-DATA"
