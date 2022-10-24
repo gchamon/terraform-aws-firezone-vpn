@@ -1,43 +1,51 @@
-data "aws_vpc" "this" {
+data "aws_vpc" "default" {
   tags = {
-    name = "default"
+    Name = "default"
   }
 }
 
-data "aws_subnet" "this" {
+data "aws_subnet" "default" {
   tags = {
-    name = "default"
+    Name = "default"
   }
 }
 
-data "aws_route53_zone" "this" {
-  name = "example.com"
-}
+module "ssh-bucket" {
+  source  = "terraform-aws-modules/s3-bucket/aws"
+  version = "3.4.0"
 
-resource "aws_s3_bucket" "ssh" {
-  bucket_prefix = "subspace-ssh-"
+  bucket_prefix = "firezone-ssh-keys-"
   acl           = "private"
-  versioning {
+  versioning = {
     enabled = true
   }
-  lifecycle_rule {
-    enabled = true
+  lifecycle_rule = [
+    {
+      id      = "expire-old-keys"
+      enabled = true
 
-    noncurrent_version_expiration {
-      days = 3
+      noncurrent_version_expiration = {
+        days = 3
+      }
     }
-  }
+  ]
+}
+
+data "aws_route53_zone" "speedy-way" {
+  name = "speedy-way.xyz"
 }
 
 module "vpn" {
-  source           = "../../"
+  source = "github.com/gchamon/terraform-aws-firezone-vpn"
+
+  name             = "firezone-poc"
   aws_region       = "us-east-1"
-  zone_id          = data.aws_route53_zone.this.id
-  allowed_ips      = [data.aws_vpc.this.cidr_block]
+  zone_id          = data.aws_route53_zone.speedy-way.id
   instance_type    = "t2.micro"
-  subnet_ids       = [data.aws_subnet.this.id]
-  ssh_key_bucket   = aws_s3_bucket.ssh.bucket
-  vpn_endpoint_url = "endpoint.vpn.${data.aws_route53_zone.this.name}"
-  internal_url     = "intenal.vpn.${data.aws_route53_zone.this.name}"
-  web_url          = "vpn.${data.aws_route53_zone.this.name}"
+  subnet_ids       = [data.aws_subnet.default.id]
+  ssh_key_bucket   = module.ssh-bucket.s3_bucket_id
+  web_url          = "vpn.${data.aws_route53_zone.speedy-way.name}"
+  vpn_endpoint_url = "endpoint.vpn.${data.aws_route53_zone.speedy-way.name}"
+  internal_url     = "internal.vpn.${data.aws_route53_zone.speedy-way.name}"
+  admin_user_email = "gabriel.chamon@tutanota.com"
 }
