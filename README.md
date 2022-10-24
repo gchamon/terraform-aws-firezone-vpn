@@ -1,5 +1,5 @@
-# terraform-aws-subspace
-Opinionated module for quick Subspace Wireguard VPN deployment on AWS
+# terraform-aws-firezone-vpn
+Terraform module for easy Firezone VPN deployment
 
 ## Introduction
 
