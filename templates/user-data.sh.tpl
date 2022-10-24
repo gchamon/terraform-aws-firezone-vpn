@@ -56,40 +56,6 @@ EOF
 log "INSTALLING DEPENDNECIES"
 yum install --assumeyes jq
 
-# # install wireguard on amazon linux 2
-# log "INSTALLING WIREGUARD"
-# curl -Lo /etc/yum.repos.d/wireguard.repo https://copr.fedorainfracloud.org/coprs/jdoss/wireguard/repo/epel-7/jdoss-wireguard-epel-7.repo
-# yum install kernel-headers-"$(uname -r)" kernel-devel-"$(uname -r)" -y
-# yum install wireguard-dkms wireguard-tools iptables-services jq -y
-#
-# # build and wireguard kernel module
-# log "BUILDING WIREGUARD KERNEL MODULE"
-# dkms status
-# WIREGUARD_VERSION="$(dkms status | grep wireguard | awk -F ', ' '{print $2}')"
-# dkms build wireguard/"$WIREGUARD_VERSION"
-# dkms install wireguard/"$WIREGUARD_VERSION"
-#
-# log "LOADING KERNEL MODULES"
-# modprobe wireguard
-# modprobe iptable_nat
-# modprobe ip6table_nat
-#
-# # Enable modules when rebooting.
-# echo "wireguard" >/etc/modules-load.d/wireguard.conf
-# echo "iptable_nat" >/etc/modules-load.d/iptable_nat.conf
-# echo "ip6table_nat" >/etc/modules-load.d/ip6table_nat.conf
-#
-# # Check if systemd-modules-load service is active.
-# systemctl status systemd-modules-load.service
-#
-# # Enable IP forwarding.
-# cat <<EOF >>/etc/sysctl.d/99-ip-forward.conf
-# net.ipv4.ip_forward=1
-# net.ipv6.conf.all.forwarding=1
-# EOF
-#
-# sysctl -p
-
 # install docker and pull image
 log "INSTALLING DOCKER"
 yum install -y docker
