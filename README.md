@@ -50,24 +50,6 @@ backup, then it will use the backup to set itself up.
 The worker instances are those that fail to acquire the ElasticIP. Their job is to pull the backup from S3
 periodically and restart the VPN in case they detect changes.
 
-### Utility scripts
-
-Scripts deployed to the main instance `$HOME` folder:
-
-#### update.sh
-
-Run this script to update the subspace image without having to recreate the instance:
-
-```shell
-ssh -i ~/.ssh/private-key.pem \
-  ec2-user@internal.example.com \
-  'sh ~/update.sh'
-```
-
-Change the key name and internal endpoint to match your configuration.
-
-####
-
 ## High Availability
 
 The plan is to add a network load balancer in front of the EC2 instances launched by the autoscaling group.
