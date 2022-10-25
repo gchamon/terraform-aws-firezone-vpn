@@ -1,5 +1,5 @@
 resource "aws_security_group" "wireguard" {
-  name = "wireguard"
+  name = var.name
 
   ingress {
     from_port   = 51820

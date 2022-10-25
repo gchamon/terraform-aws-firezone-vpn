@@ -67,7 +67,7 @@ resource "aws_launch_template" "instance" {
       firezone_external_url          = aws_route53_record.web.fqdn
       firezone_docker_image          = var.docker_image
       wireguard_endpoint             = aws_route53_record.endpoint.fqdn
-      wireguard_backup_bucket_name   = aws_s3_bucket.backup.bucket
+      wireguard_backup_bucket_name   = module.backup_bucket.s3_bucket_id
       enable-cloudwatch-metrics      = var.enable_cloudwatch_metrics
       firezone_environment_variables = var.firezone_environment_variables
     }
