@@ -25,5 +25,5 @@ module "backup_bucket" {
 
 moved {
   from = aws_s3_bucket.backup
-  to = module.backup_bucket.aws_s3_bucket.this
+  to = module.backup_bucket.aws_s3_bucket.this[0]
 }
