@@ -31,7 +31,7 @@ output "web_record" {
 }
 
 output "backup_bucket" {
-  value = aws_s3_bucket.backup
+  value = module.backup_bucket
 }
 
 output "security_group" {

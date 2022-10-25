@@ -17,8 +17,8 @@ data "aws_iam_policy_document" "backup_and_eip" {
     ]
 
     resources = [
-      "${aws_s3_bucket.backup.arn}/*",
-      aws_s3_bucket.backup.arn
+      "${module.backup_bucket.s3_bucket_arn}/*",
+      module.backup_bucket.s3_bucket_arn
     ]
   }
 
