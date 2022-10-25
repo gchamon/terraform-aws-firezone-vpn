@@ -51,6 +51,7 @@ No requirements.
 | <a name="input_desired_instances"></a> [desired\_instances](#input\_desired\_instances) | [WIP] used for high availability. Not implemented. This option has no effect | `number` | `1` | no |
 | <a name="input_docker_image"></a> [docker\_image](#input\_docker\_image) | The docker image used to launch Firezone. Override this with another image repo (e.g. ECR) to control the version. Useful for not depending on dockerhub SLA and for custom patches | `string` | `"firezone/firezone:0.6.4"` | no |
 | <a name="input_enable_cloudwatch_metrics"></a> [enable\_cloudwatch\_metrics](#input\_enable\_cloudwatch\_metrics) | Optional: enable swap, memory and disk metrics with cloudwatch agent | `bool` | `false` | no |
+| <a name="input_extra_security_group_ids"></a> [extra\_security\_group\_ids](#input\_extra\_security\_group\_ids) | Extra security group ids to attach to the VPN EC2 instance | `list(string)` | `[]` | no |
 | <a name="input_firezone_environment_variables"></a> [firezone\_environment\_variables](#input\_firezone\_environment\_variables) | Extra environment variables to pass to the Firezone container. See https://docs.firezone.dev/reference/env-vars | `any` | `{}` | no |
 | <a name="input_instance_type"></a> [instance\_type](#input\_instance\_type) | Wireguard EC2 instance type. Controls CPU, Memory and Network resources | `string` | n/a | yes |
 | <a name="input_internal_url"></a> [internal\_url](#input\_internal\_url) | The URL used to create an alias to the EC2 instance private IP | `string` | `null` | no |

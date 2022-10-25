@@ -89,7 +89,13 @@ variable "admin_user_email" {
 }
 
 variable "firezone_environment_variables" {
-  default = {}
-  type = any
+  default     = {}
+  type        = any
   description = "Extra environment variables to pass to the Firezone container. See https://docs.firezone.dev/reference/env-vars"
+}
+
+variable "extra_security_group_ids" {
+  description = "Extra security group ids to attach to the VPN EC2 instance"
+  type        = list(string)
+  default     = []
 }
