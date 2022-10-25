@@ -23,10 +23,14 @@ resource "aws_launch_template" "instance" {
 
   disable_api_termination = true
   instance_type           = var.instance_type
-  vpc_security_group_ids  = [aws_security_group.wireguard.id]
   image_id                = data.aws_ami.amazon_linux_2.image_id
   key_name                = aws_key_pair.this.key_name
   update_default_version  = true
+
+  vpc_security_group_ids = concat(
+    [aws_security_group.wireguard.id],
+    var.extra_security_group_ids
+  )
 
   block_device_mappings {
     device_name = "/dev/xvda"
